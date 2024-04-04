@@ -3,19 +3,22 @@ import { useQuery } from '@tanstack/react-query'
 import React from 'react'
 
 export default function getUser() {
-  return useQuery({
-    queryKey: ['user'],
+    return useQuery({
+        queryKey: ['user'],
 
-    queryFn: async () => {
+        queryFn: async () => {
+            const supabase = supabaseBrowser()
 
-        const supabase = supabaseBrowser();
+            const { data } = await supabase.auth.getSession()
 
-        const { data } = await supabase.auth.getSession();
+            if (data.session?.user) {
+                const { data: user } = await supabase
+                    .from('profiles')
+                    .select('*')
+                    .eq('id', data.session.user.id)
 
-        if(data.session?.user){
-
-            
-        }
-    }
-  })
+                return user
+            }
+        },
+    })
 }
