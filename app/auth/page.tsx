@@ -36,7 +36,9 @@ export default function Page() {
                     <KeyRound />
                     <h1 className="text-2xl font-bold">Next X Supabase</h1>
                 </div>
-                <p className="text-sm text-gray-300 ">Sign In 👋🏻</p>
+                <p className="text-sm text-gray-800 dark:text-gray-400 ">
+                    Sign In 👋🏻
+                </p>
                 <div className="flex flex-col gap-5 ">
                     <Button
                         className="flex w-full items-center gap-2"

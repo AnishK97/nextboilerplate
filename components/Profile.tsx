@@ -16,8 +16,10 @@ import {
     DropdownMenuLabel,
     DropdownMenuItem,
 } from '@/components/ui/dropdown-menu'
-import { LogOut, User } from 'lucide-react'
+import { LogOut, User, LayoutDashboard } from 'lucide-react'
+
 import { protectedPaths } from '@/lib/constants'
+import { HiRefresh } from 'react-icons/hi'
 
 export default function Profile() {
     const { isFetching, data } = getUser()
@@ -47,12 +49,16 @@ export default function Profile() {
         }
     }
 
+    const handleDropdownClick = (pageRef: string) => {
+        router.push(pageRef)
+    }
+
     return (
         <div>
             <DropdownMenu>
                 {!data?.id ? (
                     <Link href={'/auth'} className="animate-fade ">
-                        <Button variant={'ghost'}>Sign In</Button>
+                        <Button variant={'outline'}>Sign In</Button>
                     </Link>
                 ) : (
                     <>
@@ -61,14 +67,14 @@ export default function Profile() {
                                 <Image
                                     src={data.image_url || ''}
                                     alt={data.display_name || ''}
-                                    width={40}
-                                    height={40}
+                                    width={35}
+                                    height={35}
                                     className="rounded-full animate-fade ring-2 cursor-pointer"
                                 />
                             </DropdownMenuTrigger>
                         ) : (
                             <DropdownMenuTrigger asChild>
-                                <div className="h-[40px] w-[40px] flex items-center justify-center ring-2 rounded-full text-2xl bold cursor-pointer">
+                                <div className="h-[40px] w-[40px] flex items-center justify-center rounded-full text-2xl bold cursor-pointer">
                                     <h1>{data.email[0]}</h1>
                                 </div>
                             </DropdownMenuTrigger>
@@ -79,9 +85,19 @@ export default function Profile() {
                 <DropdownMenuContent className="w-56">
                     <DropdownMenuLabel>My Account</DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem className="flex ">
+                    <DropdownMenuItem
+                        onClick={() => handleDropdownClick('/profile')}
+                        className="flex "
+                    >
                         <User className="h-4 w-4 mr-2 " />
                         <span>Profile</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                        onClick={() => handleDropdownClick('/dashboard')}
+                        className="flex "
+                    >
+                        <LayoutDashboard className="h-4 w-4 mr-2 " />
+                        <span>Dashboard</span>
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem onClick={handleLogout} className="flex">
