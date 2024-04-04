@@ -4,7 +4,7 @@ import React from 'react'
 export default function page() {
     return (
         <div>
-            <Button>Saas Boilerplate</Button>
+            <Button className="space-y-10">Saas Boilerplate</Button>
         </div>
     )
 }

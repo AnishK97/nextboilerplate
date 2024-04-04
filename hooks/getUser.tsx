@@ -2,6 +2,14 @@ import { supabaseBrowser } from '@/lib/supabase/browser'
 import { useQuery } from '@tanstack/react-query'
 import React from 'react'
 
+const initUser = {
+    created_at: '',
+    display_name: '',
+    email: '',
+    id: '',
+    image_url: '',
+}
+
 export default function getUser() {
     return useQuery({
         queryKey: ['user'],
@@ -16,9 +24,12 @@ export default function getUser() {
                     .from('profiles')
                     .select('*')
                     .eq('id', data.session.user.id)
+                    .single()
 
                 return user
             }
+
+            return initUser
         },
     })
 }
