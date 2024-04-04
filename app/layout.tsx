@@ -27,7 +27,10 @@ export default function RootLayout({
                         enableSystem
                         disableTransitionOnChange
                     >
-                        <main className="max-w-6xl min-h-screen mx-auto pt-10">
+                        <main
+                            className="max-w-6xl min-h-screen mx-auto pt-10"
+                            suppressHydrationWarning
+                        >
                             <Navbar />
                             {children}
                         </main>

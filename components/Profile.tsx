@@ -31,8 +31,8 @@ export default function Profile() {
     const handleLogout = async () => {
         const supabase = supabaseBrowser()
         queryClient.clear()
-        router.refresh()
         await supabase.auth.signOut()
+        router.refresh()
     }
 
     return (
