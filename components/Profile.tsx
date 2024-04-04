@@ -1,13 +1,13 @@
 'use client'
 
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Button } from './ui/button'
 import getUser from '@/hooks/getUser'
 import Image from 'next/image'
 import { useQueryClient } from '@tanstack/react-query'
 import { supabaseBrowser } from '@/lib/supabase/browser'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -17,12 +17,20 @@ import {
     DropdownMenuItem,
 } from '@/components/ui/dropdown-menu'
 import { LogOut, User } from 'lucide-react'
+import { protectedPaths } from '@/lib/constants'
 
 export default function Profile() {
     const { isFetching, data } = getUser()
 
     const queryClient = useQueryClient()
+
     const router = useRouter()
+
+    const pathname = usePathname()
+
+    if (pathname.toString() === '/auth') {
+        return <></>
+    }
 
     if (isFetching) {
         return <></>
@@ -33,13 +41,17 @@ export default function Profile() {
         queryClient.clear()
         await supabase.auth.signOut()
         router.refresh()
+
+        if (protectedPaths.includes(pathname)) {
+            router.replace('/auth?next=' + pathname)
+        }
     }
 
     return (
         <div>
             <DropdownMenu>
                 {!data?.id ? (
-                    <Link href={'/auth'} className="animate-fade">
+                    <Link href={'/auth'} className="animate-fade ">
                         <Button variant={'ghost'}>Sign In</Button>
                     </Link>
                 ) : (

@@ -6,8 +6,17 @@ import React from 'react'
 import { FcGoogle } from 'react-icons/fc'
 import { FaGithub } from 'react-icons/fa6'
 import { supabaseBrowser } from '@/lib/supabase/browser'
+import { useSearchParams } from 'next/navigation'
 
 export default function Page() {
+    const params = useSearchParams()
+    const next = params.get('next')
+
+    let redirectUrl = '/auth/callback'
+
+    if (next) {
+        redirectUrl = '/auth/callback?next=' + next
+    }
     const handleLoginWithOAuth = (provider: 'github' | 'google') => {
         const supabase = supabaseBrowser()
 
@@ -15,13 +24,13 @@ export default function Page() {
             provider,
 
             options: {
-                redirectTo: location.origin + '/auth/callback',
+                redirectTo: location.origin + redirectUrl,
             },
         })
     }
 
     return (
-        <div className="flex items-center justify-center w-full h-screen">
+        <div className="flex items-center justify-center w-full h-[80vh]">
             <div className="w-96 rounded-md border p-5 space-y-5 relative">
                 <div className="flex items-center gap-2">
                     <KeyRound />
