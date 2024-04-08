@@ -8,9 +8,9 @@ export default function Navbar() {
     return (
         <div className="flex items-center justify-between h-20">
             <Link href={'/'} className="justify-end">
-                <h1>Logo</h1>
+                <h1 className="text-2xl font-bold">Logo</h1>
             </Link>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 ">
                 <Profile />
                 <ThemeSwitcher />
             </div>

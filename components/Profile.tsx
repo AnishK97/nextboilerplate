@@ -58,7 +58,7 @@ export default function Profile() {
             <DropdownMenu>
                 {!data?.id ? (
                     <Link href={'/auth'} className="animate-fade ">
-                        <Button variant={'outline'}>Sign In</Button>
+                        <Button variant={'default'}>Sign In</Button>
                     </Link>
                 ) : (
                     <>
